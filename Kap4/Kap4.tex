@@ -1,0 +1,68 @@
+\chapter{Cap\'{\i}tulo 3}
+\section{Metodolog\'{i}a}
+
+\begin{enumerate}
+\item \textbf{Reproducir las simulaciones por din\'{a}mica molecular de estafiloxantina en DMPG y DPPG realizadas  por Mel\'{e}ndez et al. \cite{MelendezDelgado2018StudyingBilayers}, utilizando los par\'{a}metros no optimizados de la cadena diaponeurosporenoica.}\label{item:1}\\
+
+\textbf{Ensamblaje}\\
+Se ensamblar\'{a}n las bicapas lip\'{i}dicas DMPG y DPPG mediante la herramienta de ensamblaje de CHARMM-GUI \cite{Sunhwan2008CHARMM-GUI:CHARMM}, insertando 64 l\'{i}pidos por monocapa. Adicionalmente, a cada sistema se le agregar\'{a}n 45 mol\'{e}culas de agua por l\'{i}pido,  un ion de \ce{Na^+} por l\'{i}pido  para contrarrestar la carga negativa y 0.15M de \ce{NaCl} para reproducir la condiciones fisiol\'{o}gicas de sal.\\
+Dentro de esta membrana se insertar\'{a} posteriormente una mol\'{e}cula de estafiloxantina. Partiendo del archivo SMILES tomado de \cite{NationalCenterforBiotechnologyInformationPubChemCID=24892781} y utilizando tambi\'{e}n CHARMM-GUI se obtendr\'{a}n la estructura tridimensional y el campo de fuerzas de todo el sistema. Una vez finalizado este procedimiento se cambiar\'{a}n los t\'{e}rminos de los \'{a}ngulos dihedros  de la cadena diaponeurosporenoica por aquellos asociados a anillos arom\'{a}ticos, los cuales son mas representativos de un sistema deslocalizado de enlaces dobles conjugados parecido al que presenta la cadena diaponeurosporenoica.\\
+\textbf{Minimizaci\'{o}n de la Energ\'{i}a}\\
+Para remover sobrelapamiento entre \'{a}tomos durante el proceso de ensamblaje, que pueda causar inestabilidades durante las simulaciones de din\'{a}mica molecular, se realizar\'{a} una minimizaci\'{o}n de la energ\'{i}a, por 5000 pasos, usando el m\'{e}todo de gradiente decreciente. Est\'{a} simulaci\'{o}n se realizar\'{a} con el paquete de simulaci\'{o}n principal GROMACS \cite{AbrahamGROMACS2019}.\\
+
+\textbf{Relajaci\'{o}n}\\
+Las coordenadas obtenidas a partir de la minimizaci\'{o}n de la energ\'{i}a se relajar\'{a}n en 6 simulaciones de din\'{a}mica molecular sucesivas, de 25ps cada una, integrando las ecuaciones de movimiento a pasos discretos de tiempo de 1fs. Este valor es 10 veces menor al per\'{i}odo asociado a la frecuencias de vibraci\'{o}n m\'{a}s alta encontrada para este sistema, correspondiente a fluctuaciones en las posiciones en los \'{a}tomos de hidr\'{o}geno. Durante cada una de las equilibraciones se impondr\'{a}n restricciones en las posiciones y en los \'{a}ngulos dihedros de un \'{a}tomo en la cabeza de cada l\'{i}pido, con el fin de que estos no se desv\'{i}en significativamente de sus posiciones iniciales y que las cadenas lip\'{i}dicas no adopten orientaciones artificiales. Estas restricciones se ir\'{a}n removiendo gradualmente durante las 6 simulaciones de relajaci\'{o}n.\\
+
+\textbf{Simulaci\'{o}n}\\
+Se impondr\'{a}n condiciones de frontera peri\'{o}dicas en una caja ortorr\'{o}mbica. El sistema se mantendr\'{a} a una presi\'{o}n de 1bar y a temperatura de 323K constantes (condiciones termodin\'{a}micas NPT) acopl\'{a}ndolo a una barostato de Parinello-Rahman \cite{Parrinello1981PolymorphicMethod} y aun termostato de Nose-Hoover. Las interacciones no enlazantes de corto alcance se modelar\'{a}n mediante un potencial de Lennard-Jones (ecuaci\'{o}n \eqref{eq:7}). EL potencial de Coulomb (ecuaci\'{o}n 7) se calcular\'{a} por el medio del m\'{e}todo de \textit{Particle Mesh Ewald (PME)}, apropiado para sistemas peri\'{o}dicos \cite{Darden1993ParticleSystems}. Los enlaces relacionados con los \'{a}tomos de hidr\'{o}geno  se restringir\'{a}n a trav\'{e}s de ligaduras utilizando el algoritmo de LINCS \cite{Hess1997LINCS:Simulations} y para el caso del agua tambi\'{e}n el \'{a}ngulo entre los dos hidr\'{o}genos tambi\'{e}n el \'{a}ngulo entre los dos hidr\'{o}genos empleando el algoritmo SETTLE \cite{Miyamoto1992Settle:Models}. Estas restricciones permitir\'{a}n aumentar el paso de tiempo de integraci\'{o}n a 2fs. Para cada uno de los sistemas considerados se realizar\'{a} una simulaci\'{o}n de $1\mu$s.\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item \textbf{Optimizar los par\'{a}metros relacionados  con los \'{a}ngulos dihedros de la cadena diaponeurosporenoica pr\'{o}ximos al enlace \'{e}ster. Posteriormente, realizar simulaciones por din\'{a}mica molecular de estafiloxantina embebida en membranas de DMPG y DPPG.}\label{item:2}\\
+
+Los \'{a}ngulos dihedros de la cadena diaponeurosporenoica pr\'{o}ximos al enlace \'{e}ster en la mol\'{e}cula de estafiloxantina (señalados en rojo en la figura \ref{fig:stx}) ser\'{a}n optimizados por medio de los m\'{e}todos computacionales cu\'{a}nticos propuestos por Grudzinski et al. \cite{Grudzinski2017LocalizationBilayer} y Cerezo et al. \cite{Cerezo2012AntioxidantSimulations}. Estos c\'{a}lculos permitir\'{a}n describir de manera apropiada el potencial dihedro de este enlace \'{e}ster, que no es usual en l\'{i}pidos debido a su cercan\'{i}a a la cadena diaponeurosporenoica (la cual tiene electrones deslocalizados). Grudzinski et al. \cite{Grudzinski2017LocalizationBilayer} utilizaron una herramienta de optimizaci\'{o}n basada en Gaussian e implementada en el programa de visualizaci\'{o}n VMD para calibrar los par\'{a}metros de los carotenoides Xanthophylls \cite{Grudzinski2017LocalizationBilayer}. Adicionalmente, Cerezo et al., usando tambi\'{e}n Gaussian-09 \cite{Cerezo2012AntioxidantSimulations}, encontr\'{o} la energ\'{i}a potencial como funci\'{o}n de los \'{a}ngulos dihedros de la cadena poli\'{e}nica de un $\beta$-caroteno. Una vez obtenidos estos par\'{a}metros, se realizar\'{a}n simulaciones de din\'{a}mica molecular d estafiloxantina inmersa en bicapas de l\'{i}pidos DMPG y DPPG, siguiendo el mismo procedimiento indicado en el numeral \ref{item:1}.\\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item \textbf{ Generar un campo de fuerzas para estafiloxantina utilizando los par\'{a}metros de AMBER y realizar simulaciones por din\'{a}mica molecular con este campo de fuerzas. Esto con el fin de demostrar que el comportamiento de la mol\'{e}cula no depende del tipo de potencial utilizado.}\label{item:3}\\
+Se obtendr\'{a}n par\'{a}metros para estafiloxantina utilizando el campo de fuerza de AMBER. Para esto se utilizar\'{a}n las herramientas del \textit{Generalized Amber Force Field} (GAAF) \cite{Amber2016}, teniendo en cuenta que los par\'{a}metros obtenidos representan apropiadamente la geometr\'{i}a de la cadena diaponeurosporenoica y el enlace \'{e}ster. Se realizar\'{a}n simulaciones de din\'{a}mica molecular para estafiloxantina insertada en bicapas de DMPG y DPPG, utilizando el procedimiento indicado en el numeral \ref{item:1}. Este nuevo conjunto de simulaciones ser\'{a} comparado con las simulaciones obtenidas con CHARMM (numeral \ref{item:2}) y de esta manera descartar posibles artefactos en la din\'{a}mica de estafiloxantina causados por el campo de fuerzas.\\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item \textbf{ Examinar el efecto de la concentraci\'{o}n de estafiloxantina sobre las propiedades de la bicapa lip\'{i}dica, realizando simulaciones de din\'{a}mica molecular con par\'{a}metros generados en los numerales 2 y 3, aumentando  la concentraci\'{o}n de estafiloxantina al 15\%.}\label{item:4}\\
+
+En mediciones experimentales se ha observado que las propiedades biof\'{i}sicas como la constante de doblamiento de la membrana son sensibles a concentraciones de estafiloxantina en el orden del 15\% molar \cite{Perez-LopezVariationsProperties}. Por lo tanto, en este \'{u}ltimo objetivo vamos a explorar es el efecto que tiene incluir un n\'{u}mero de mol\'{e}culas de estafiloxantina que refleje esta concentraci\'{o}n (aproximadamente 19 mol\'{e}culas). Para realizar esto, se llevan a cabo simulaciones utilizando tambi\'{e}n membranas modelo con DPPG Y DMPG, con un 15\% molar de estos l\'{i}pidos reemplazados por estafiloxantina. Estas simulaciones tambi\'{e}n se realizar\'{a}n para los dos campos de fuerza CHARMM y AMBER. EL protocolo de simulaci\'{o}n ser\'{a} id\'{e}ntico al del numeral \ref{item:1}.
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%, %%%%%%%%%%%
+\subsection*{An\'{a}lisis de las Simulaciones}
+De las trayectorias generadas en las simulacioines se extraer\'{a}n distintos observables que nos permitan analizar cuantitativamente el comportamiento de estafiloxantina y su efecto en la bicapa de l\'{i}pidos circundantes. Los siguientes observables ser\'{a}n por consiguiente calculados, tanto en funci\'{o}n del tiempo como en promedio durante toda la simulaci\'{o}n:\\
+\begin{enumerate}
+\item \textbf{Orientaci\'{o}n de la cadena diaponeurosporenoica}: El \'{a}ngulo formado por la cadena diaponeurosporenoica en la estafiloxantina con respecto a la membrana ser\'{a} monitoreado durante las simulaciones para as\'{i} poder determinar su orientaci\'{o}n (u orientaciones) de preferencia.
+\item \textbf{\'{a}rea por l\'{i}pido}: Como una medida del grado de compactamiento de la bicapa se hallar\'{a} el \'{a}rea por l\'{i}pido global mediante la f\'{o}rmula:
+\begin{equation}
+APL=\frac{xy}{N/2}
+\end{equation}
+donde $xy$ es el tamaño lateral de la caja de simulaci\'{o}n y $N$ es el n\'{u}mero de l\'{i}pidos.Adicionalmente, se har\'{a} una medici\'{o}n local de area descrita en las siguientes secciones.
+\item \textbf{Espesor de la membrana}:
+El espesor de la membrana se hallar\'{a} monitoreando la densidad electr\'{o}nica de los l\'{i}pidos como funci\'{o}n de la coordenada normal al plano de la membrana. De esta densidad electr\'{o}nica se hallan los dos m\'{a}ximos que correspondan a los grupos fosfato y se calcula la distancia entre ellos.
+\item  \textbf{Par\'{a}metro de orden del deuterio}:
+El par\'{a}metro de orden del deuterio se calcular\'{a} como una medida de la orientaci\'{o}n promedio de los l\'{i}pidos DMPG y DPPG. Este par\'{a}metro se define de la siguiente manera: \cite{Aponte-santamariaSupplementaryFigures}\\
+\begin{equation}
+S_{CD}=\frac{2}{3}S_{xx}+\frac{1}{3}S_{yy},
+ \end{equation}
+donde $S_{xx}$ y $S_{yy}$ se definen de la siguiente manera:
+\begin{equation}
+S_{xx}=\frac{1}{2}\langle 3\cos^2\theta-1\rangle,
+ \end{equation}
+\begin{equation}
+S_{yy}=\frac{1}{2}\langle 3\cos^2\alpha-1\rangle.
+ \end{equation}
+$\theta$ es el \'{a}ngulo medido respecto al vector normal a la membrana y el vector normal al plano definido por los carbonos \ce{C_{i-1}}, \ce{C_{i}} y \ce{C_{i+1}}; $\alpha$ es el \'{a}ngulo medido respecto al vector normal a la membrana y un vector que pertenece al plano definido por los carbonos \ce{C_{i-1}}, \ce{C_{i}} y \ce{C_{i+1}} pero perpendicular al vector que conecta  \ce{C_{i-1}} y \ce{C_{i+1}}.
+
+\item \textbf{Coeficiente de difusi\'{o}n}: 
+Adicional a todas estas medidas estructurales, se analizar\'{a} la difusi\'{o}n de los distintos componentes de la membrana monitoreando el desplazamiento lateral cuadr\'{a}tico promedio $\langle\Delta x^2\rangle$. El coeficiente de difusi\'{o}n, D, se hallar\'{a} mediante una regresi\'{o}n lineal de este desplazamiento en funci\'{o}n del tiempo, gracias a la relaci\'{o}n de Einstein:
+\begin{equation}
+\langle\Delta x^2\rangle= 4Dt
+ \end{equation}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%5
+Todas estas cantidades se calcular\'{a}n de manera global para toda la bicapa de l\'{i}pidos. Tambi\'{e}n se calcular\'{a}n el area por l\'{i}pido de manera local a diferentes posiciones alrededor de la mol\'{e}cula de estafiloxantina usando un algoritmo basado en teselaciones de Voronoy, implementado dentro de la herramienta glomepro \cite{MelendezDelgado2018StudyingBilayers}.\\
+
+El estudiante Cabrera realizar\'{a} todas las simulaciones, an\'{a}lisis de resultados y escritura de los documentos correspondientes supervisado por el profesor Chad Leidy (f\'{i}sica) y el Dr. Camilo Aponte Santamar\'{i}a (MPTG-CBP). \'{e}l tendr\'{a} un espacio de trabajo en la oficina del MPTG-CBP y utilizar\'{a} el computador y el acceso al cl\'{u}ster proporcionados por el Departamento de F\'{i}sica.

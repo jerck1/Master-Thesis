@@ -49,7 +49,7 @@ Las constantes $k_r,k_\theta,f_{ij},\epsilon_{ij},r_{0ij},q_{i},q_{j}$ son las c
  %  r_{0ij}=\frac{1}{2}\left(r_i+r_j\right)
 %\end{equation}
 \subsubsection{Soluci\'{o}n de las ecuaciones de Movimiento}
-Debido al tamaño de los sistemas biol\'{o}gicos a considerar, en el caso de estafiloxantina embebida en una bicapa con 128 l\'{i}pidos de DMPG (O DPPG) del orden de 15000 \'{a}tomos \cite{MelendezDelgado2018StudyingBilayers}, las ecuaciones de movimiento \eqref{eq:1} deben resolverse num\'{e}ricamente. Para resolverlas se usan algoritmos como el de Verlet, el de ``\textit{leapfrog}'', el de velocidad de Verlet o el de Beeman \cite{Mazur1997CommonRevisited}.\\
+Debido al tama\~no de los sistemas biol\'{o}gicos a considerar, en el caso de estafiloxantina embebida en una bicapa con 128 l\'{i}pidos de DMPG (O DPPG) del orden de 15000 \'{a}tomos \cite{MelendezDelgado2018StudyingBilayers}, las ecuaciones de movimiento \eqref{eq:1} deben resolverse num\'{e}ricamente. Para resolverlas se usan algoritmos como el de Verlet, el de ``\textit{leapfrog}'', el de velocidad de Verlet o el de Beeman \cite{Mazur1997CommonRevisited}.\\
 %En el algoritmo de Verlet se hace una aproximaci\'{o}n en series de Taylor a segundo orden de las posiciones hacia adelante $\vec{r}_{i}(t_{n+1})$ y hacia atr\'{a}s $\vec{r}_{i}(t_{n-1})$, ver \cite{MelendezDelgado2018StudyingBilayers},\cite{Mazur1997CommonRevisited}; que al restarlas da la siguiente soluci\'{o}n iterada:
 %\begin{equation}\label{eq:2}
 %t_{n}=n\Delta t
